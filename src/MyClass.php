@@ -7,6 +7,6 @@ class MyClass
 
     public function doSomething()
     {
-        return true;
+        return false;
     }
 }
