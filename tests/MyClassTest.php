@@ -17,4 +17,10 @@ class MyClassTest extends TestCase
     {
         $this->assertTrue($this->myClass->doSomething());
     }
+
+    public function testASlowAndFailingTest(): void
+    {
+        sleep(5);
+        $this->assertTrue(false);
+    }
 }
