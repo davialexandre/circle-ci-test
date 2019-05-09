@@ -35,6 +35,7 @@ jobs:
 
       - run:
           command: |
+            set +ex
             export PATH=/buildkit/buildkit/bin:$PATH
             cd uk.co.compucorp.civicrm.hrcore
             /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml
