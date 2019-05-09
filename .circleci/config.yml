@@ -23,8 +23,9 @@ jobs:
 
     steps:
       - checkout
-      - run: whoami
       - run: env
+      - run: ls -l
+      - run: whoami
       - run: sudo service mysql start
       - run:
           command: |
