@@ -29,13 +29,20 @@ jobs:
             git clone --depth 1 https://github.com/compucorp/civihr-tasks-assignments civihr_tasks
             git clone --depth 1 https://github.com/compucorp/org.civicrm.shoreditch
             git clone --depth 1 https://github.com/compucorp/org.civicrm.styleguide
-            drush cvapi extension.refresh
-            ./civihr/bin/drush-install.sh
+#            drush cvapi extension.refresh
+#            ./civihr/bin/drush-install.sh
           working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions"
 
       - run:
-          command: /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit ~/project/test-results/phpunit/hrcore.xml
-          working_directory: /buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr/uk.co.compucorp.hrcore
+          command: |
+            export PATH=/buildkit/buildkit/bin:$PATH
+            cd uk.co.compucorp.civicrm.hrcore
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml || true
+            cd ../com.civicrm.hrjobroles
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml || true
+            cd ../contactaccessrights
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml || true
+          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
 
 #      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
 #      - run: sudo docker-php-ext-install zip
