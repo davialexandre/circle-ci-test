@@ -42,6 +42,12 @@ jobs:
             /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml || true
             cd ../contactaccessrights
             /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml || true
+            cd ../uk.co.compucorp.civicrm.hrleaveandabsences
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml || true
+            cd ../hrjobcontract
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml || true
+            cd ../uk.co.compucorp.civicrm.hrsampledata
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml || true
           working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
 
 #      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
