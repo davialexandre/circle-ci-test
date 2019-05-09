@@ -11,7 +11,7 @@ commands:
         type: string
     steps:
       - run:
-          description: "Test << parameters.for >>"
+          name: "Test << parameters.for >>"
           command: |
             export PATH=/buildkit/buildkit/bin:$PATH
             cd << parameters.for >>
