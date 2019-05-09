@@ -11,6 +11,7 @@ commands:
         type: string
     steps:
       - run:
+          description: "Test << parameters.for >>"
           command: |
             export PATH=/buildkit/buildkit/bin:$PATH
             cd << parameters.for >>
@@ -47,39 +48,30 @@ jobs:
           working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions"
 
       - run_php_tests:
-          description: "Test HRCore"
           for: "uk.co.compucorp.civicrm.hrcore"
 
       - run_php_tests:
-          description: "Test HRJobRoles"
           for: "com.civicrm.hrjobroles"
 
       - run_php_tests:
-          description: "Test Contact Access Rights"
           for: "contactaccessrights"
 
       - run_php_tests:
-          description: "Test Leave & Absences"
           for: "uk.co.compucorp.civicrm.hrleaveandabsences"
 
       - run_php_tests:
-          description: "Test Job Contracts"
           for: "hrjobcontract"
 
       - run_php_tests:
-          description: "Test Sample Data"
           for: "uk.co.compucorp.civicrm.hrsampledata"
 
       - run_php_tests:
-          description: "Test HRVisa"
           for: "hrvisa"
 
       - run_php_tests:
-          description: "Test HREmergency"
           for: "hrmergency"
 
       - run_php_tests:
-          description: "Test Contact Actions Menu"
           for: "uk.co.compucorp.civicrm.hrcontactactionsmenu"
 #      - run:
 #          command: |
