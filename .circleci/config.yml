@@ -2,7 +2,20 @@
 #
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
-version: 2
+version: 2.1
+commands:
+  run_php_tests:
+    description: "Runs the PHP tests for a given extension"
+    parameters:
+      for:
+        type: string
+    steps:
+      - run:
+          command: |
+            export PATH=/buildkit/buildkit/bin:$PATH
+            cd << parameters.for >>
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/<< parameters.for >>.xml
+          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
 jobs:
   build:
     docker:
@@ -33,23 +46,28 @@ jobs:
 #            ./civihr/bin/drush-install.sh
           working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions"
 
-      - run:
-          command: |
-            set -e
-            export PATH=/buildkit/buildkit/bin:$PATH
-            cd uk.co.compucorp.civicrm.hrcore
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml
-            cd ../com.civicrm.hrjobroles
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml
-            cd ../contactaccessrights
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml
-            cd ../uk.co.compucorp.civicrm.hrleaveandabsences
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml
-            cd ../hrjobcontract
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml
-            cd ../uk.co.compucorp.civicrm.hrsampledata
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml
-          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
+      - run_php_tests:
+          for: "uk.co.compucorp.civicrm.hrcore"
+
+      - run_php_tests:
+          for: "com.civicrm.hrjobroles"
+
+#      - run:
+#          command: |
+#            export PATH=/buildkit/buildkit/bin:$PATH
+#            cd uk.co.compucorp.civicrm.hrcore
+#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml
+#            cd ../com.civicrm.hrjobroles
+#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml
+#            cd ../contactaccessrights
+#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml
+#            cd ../uk.co.compucorp.civicrm.hrleaveandabsences
+#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml
+#            cd ../hrjobcontract
+#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml
+#            cd ../uk.co.compucorp.civicrm.hrsampledata
+#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml
+#          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
 
 #      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
 #      - run: sudo docker-php-ext-install zip
