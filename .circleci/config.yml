@@ -47,48 +47,49 @@ jobs:
 #            ./civihr/bin/drush-install.sh
           working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions"
 
-      - run_php_tests:
-          for: "uk.co.compucorp.civicrm.hrcore"
-
-      - run_php_tests:
-          for: "com.civicrm.hrjobroles"
-
-      - run_php_tests:
-          for: "contactaccessrights"
-
-      - run_php_tests:
-          for: "uk.co.compucorp.civicrm.hrleaveandabsences"
-
-      - run_php_tests:
-          for: "hrjobcontract"
-
-      - run_php_tests:
-          for: "uk.co.compucorp.civicrm.hrsampledata"
-
-      - run_php_tests:
-          for: "hrvisa"
-
-      - run_php_tests:
-          for: "hrmergency"
-
-      - run_php_tests:
-          for: "uk.co.compucorp.civicrm.hrcontactactionsmenu"
-#      - run:
-#          command: |
-#            export PATH=/buildkit/buildkit/bin:$PATH
-#            cd uk.co.compucorp.civicrm.hrcore
-#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml
-#            cd ../com.civicrm.hrjobroles
-#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml
-#            cd ../contactaccessrights
-#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml
-#            cd ../uk.co.compucorp.civicrm.hrleaveandabsences
-#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml
-#            cd ../hrjobcontract
-#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml
-#            cd ../uk.co.compucorp.civicrm.hrsampledata
-#            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml
-#          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
+#      - run_php_tests:
+#          for: "uk.co.compucorp.civicrm.hrcore"
+#
+#      - run_php_tests:
+#          for: "com.civicrm.hrjobroles"
+#
+#      - run_php_tests:
+#          for: "contactaccessrights"
+#
+#      - run_php_tests:
+#          for: "uk.co.compucorp.civicrm.hrleaveandabsences"
+#
+#      - run_php_tests:
+#          for: "hrjobcontract"
+#
+#      - run_php_tests:
+#          for: "uk.co.compucorp.civicrm.hrsampledata"
+#
+#      - run_php_tests:
+#          for: "hrvisa"
+#
+#      - run_php_tests:
+#          for: "hrmergency"
+#
+#      - run_php_tests:
+#          for: "uk.co.compucorp.civicrm.hrcontactactionsmenu"
+      - run:
+          name: "Run PHP Tests"
+          command: |
+            export PATH=/buildkit/buildkit/bin:$PATH
+            cd uk.co.compucorp.civicrm.hrcore
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml |
+            cd ../com.civicrm.hrjobroles |
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml |
+            cd ../contactaccessrights |
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml |
+            cd ../uk.co.compucorp.civicrm.hrleaveandabsences |
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml |
+            cd ../hrjobcontract |
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml |
+            cd ../uk.co.compucorp.civicrm.hrsampledata |
+            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml
+          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
 
 #      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
 #      - run: sudo docker-php-ext-install zip
