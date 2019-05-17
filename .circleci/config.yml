@@ -90,6 +90,8 @@ jobs:
             phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml || HAS_FAILED_TESTS=1
             cd ../uk.co.compucorp.civicrm.hrsampledata
             phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml || HAS_FAILED_TESTS=1
+
+            exit $HAS_FAILED_TESTS
           working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
 
 #      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
