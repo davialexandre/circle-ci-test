@@ -76,20 +76,20 @@ jobs:
       - run:
           name: "Run PHP Tests"
           command: |
-            set +e
             export PATH=/buildkit/buildkit/bin:$PATH
-            cd uk.co.compucorp.civicrm.hrcore |
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml |
-            cd ../com.civicrm.hrjobroles |
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml |
-            cd ../contactaccessrights |
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml |
-            cd ../uk.co.compucorp.civicrm.hrleaveandabsences |
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml |
-            cd ../hrjobcontract |
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml |
-            cd ../uk.co.compucorp.civicrm.hrsampledata |
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml
+            HAS_FAILED_TESTS=0
+            cd uk.co.compucorp.civicrm.hrcore
+            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml || HAS_FAILED_TESTS=1
+            cd ../com.civicrm.hrjobroles
+            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml || HAS_FAILED_TESTS=1
+            cd ../contactaccessrights
+            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml || HAS_FAILED_TESTS=1
+            cd ../uk.co.compucorp.civicrm.hrleaveandabsences
+            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml ||HAS_FAILED_TESTS=1
+            cd ../hrjobcontract
+            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml || HAS_FAILED_TESTS=1
+            cd ../uk.co.compucorp.civicrm.hrsampledata
+            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml || HAS_FAILED_TESTS=1
           working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
 
 #      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
