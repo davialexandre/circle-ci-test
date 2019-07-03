@@ -12,49 +12,28 @@ jobs:
 
     steps:
       - checkout
+
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "~/.composer/composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: composer global require drupal/coder
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "~/.composer/composer.json" }}
+          paths:
+            - ~/.composer/vendor
+
       - run:
           command: |
             export PATH="$PATH:$HOME/.composer/vendor/bin"
-            composer global require drupal/coder
             phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
             git diff-tree --no-commit-id --name-only -r HEAD | xargs phpcs --standard=Drupal --extensions=php,inc,module
             env
 
-#      - run:
-#          name: "Run PHP Tests"
-#          command: |
-#            export PATH=/buildkit/buildkit/bin:$PATH
-#            HAS_FAILED_TESTS=0
-#            cd uk.co.compucorp.civicrm.hrcore
-#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml || HAS_FAILED_TESTS=1
-#            cd ../com.civicrm.hrjobroles
-#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml || HAS_FAILED_TESTS=1
-#            cd ../contactaccessrights
-#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml || HAS_FAILED_TESTS=1
-#            cd ../uk.co.compucorp.civicrm.hrleaveandabsences
-#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml ||HAS_FAILED_TESTS=1
-#            cd ../hrjobcontract
-#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml || HAS_FAILED_TESTS=1
-#            cd ../uk.co.compucorp.civicrm.hrsampledata
-#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml || HAS_FAILED_TESTS=1
-#
-#            exit $HAS_FAILED_TESTS
-#          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
-
-      # Download and cache dependencies
-#      - restore_cache:
-#          keys:
-#            # "composer.lock" can be used if it is committed to the repo
-#            - v1-dependencies-{{ checksum "composer.json" }}
-#            # fallback to using the latest cache if no exact match is found
-#            - v1-dependencies-
-#
-#      - run: composer install -n --prefer-dist
-#
-#      - save_cache:
-#          key: v1-dependencies-{{ checksum "composer.json" }}
-#          paths:
-#            - ./vendor
 #      - restore_cache:
 #          keys:
 #            - node-v1-{{ checksum "package.json" }}
