@@ -8,15 +8,13 @@ jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: davialexandre/civihr-test:latest
-        user: buildkit
+      - image: circleci/php:7.2.19-cli-node
 
     steps:
       - checkout
       - run:
           command: |
-            export PATH=/buildkit/buildkit/bin:$PATH
-            git diff-tree --no-commit-id --name-only -r HEAD
+            git diff-tree --no-commit-id --name-only -r HEAD | grep -E ".+\.php$"
 
 #      - run:
 #          name: "Run PHP Tests"
