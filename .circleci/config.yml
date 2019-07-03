@@ -3,20 +3,7 @@
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
 version: 2.1
-commands:
-  run_php_tests:
-    description: "Runs the PHP tests for a given extension"
-    parameters:
-      for:
-        type: string
-    steps:
-      - run:
-          name: "Test << parameters.for >>"
-          command: |
-            export PATH=/buildkit/buildkit/bin:$PATH
-            cd << parameters.for >>
-            /buildkit/buildkit/bin/phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/<< parameters.for >>.xml
-          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
+
 jobs:
   build:
     docker:
@@ -24,78 +11,33 @@ jobs:
       - image: davialexandre/civihr-test:latest
         user: buildkit
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # Using the RAM variation mitigates I/O contention
-      # for database intensive operations.
-      # - image: circleci/mysql:5.7-ram
-      #
-      # - image: redis:2.8.19
-
     steps:
       - checkout
       - run:
           command: |
-            sudo service mysql start
             export PATH=/buildkit/buildkit/bin:$PATH
-            git clone --depth 1 https://github.com/compucorp/civihr
-            git clone --depth 1 https://github.com/compucorp/civihr-tasks-assignments civihr_tasks
-            git clone --depth 1 https://github.com/compucorp/org.civicrm.shoreditch
-            git clone --depth 1 https://github.com/compucorp/org.civicrm.styleguide
-#            drush cvapi extension.refresh
-#            ./civihr/bin/drush-install.sh
-          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions"
+            git diff-tree --no-commit-id --name-only -r HEAD
 
-#      - run_php_tests:
-#          for: "uk.co.compucorp.civicrm.hrcore"
+#      - run:
+#          name: "Run PHP Tests"
+#          command: |
+#            export PATH=/buildkit/buildkit/bin:$PATH
+#            HAS_FAILED_TESTS=0
+#            cd uk.co.compucorp.civicrm.hrcore
+#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml || HAS_FAILED_TESTS=1
+#            cd ../com.civicrm.hrjobroles
+#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml || HAS_FAILED_TESTS=1
+#            cd ../contactaccessrights
+#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml || HAS_FAILED_TESTS=1
+#            cd ../uk.co.compucorp.civicrm.hrleaveandabsences
+#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml ||HAS_FAILED_TESTS=1
+#            cd ../hrjobcontract
+#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml || HAS_FAILED_TESTS=1
+#            cd ../uk.co.compucorp.civicrm.hrsampledata
+#            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml || HAS_FAILED_TESTS=1
 #
-#      - run_php_tests:
-#          for: "com.civicrm.hrjobroles"
-#
-#      - run_php_tests:
-#          for: "contactaccessrights"
-#
-#      - run_php_tests:
-#          for: "uk.co.compucorp.civicrm.hrleaveandabsences"
-#
-#      - run_php_tests:
-#          for: "hrjobcontract"
-#
-#      - run_php_tests:
-#          for: "uk.co.compucorp.civicrm.hrsampledata"
-#
-#      - run_php_tests:
-#          for: "hrvisa"
-#
-#      - run_php_tests:
-#          for: "hrmergency"
-#
-#      - run_php_tests:
-#          for: "uk.co.compucorp.civicrm.hrcontactactionsmenu"
-      - run:
-          name: "Run PHP Tests"
-          command: |
-            export PATH=/buildkit/buildkit/bin:$PATH
-            HAS_FAILED_TESTS=0
-            cd uk.co.compucorp.civicrm.hrcore
-            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrcore.xml || HAS_FAILED_TESTS=1
-            cd ../com.civicrm.hrjobroles
-            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobroles.xml || HAS_FAILED_TESTS=1
-            cd ../contactaccessrights
-            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/contactaccessrights.xml || HAS_FAILED_TESTS=1
-            cd ../uk.co.compucorp.civicrm.hrleaveandabsences
-            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrleaveandabsences.xml ||HAS_FAILED_TESTS=1
-            cd ../hrjobcontract
-            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrjobcontract.xml || HAS_FAILED_TESTS=1
-            cd ../uk.co.compucorp.civicrm.hrsampledata
-            phpunit4 --testsuite "Unit Tests" --log-junit /buildkit/project/test-results/phpunit/hrsampledata.xml || HAS_FAILED_TESTS=1
-
-            exit $HAS_FAILED_TESTS
-          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
-
-#      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-#      - run: sudo docker-php-ext-install zip
+#            exit $HAS_FAILED_TESTS
+#          working_directory: "/buildkit/buildkit/build/drupal-clean/sites/all/modules/civicrm/tools/extensions/civihr"
 
       # Download and cache dependencies
 #      - restore_cache:
@@ -126,5 +68,5 @@ jobs:
 #      - run: ./vendor/bin/codecept build
 #      - run: ./vendor/bin/codecept run
 
-      - store_test_results:
-          path: test-results
+#      - store_test_results:
+#          path: test-results
