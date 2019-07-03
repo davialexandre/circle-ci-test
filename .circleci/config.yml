@@ -18,6 +18,7 @@ jobs:
             composer global require drupal/coder
             phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
             git diff-tree --no-commit-id --name-only -r HEAD | xargs phpcs --standard=Drupal --extensions=php,inc,module
+            env
 
 #      - run:
 #          name: "Run PHP Tests"
