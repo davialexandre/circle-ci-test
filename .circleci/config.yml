@@ -17,7 +17,7 @@ jobs:
             export PATH="$PATH:$HOME/.composer/vendor/bin"
             composer global require drupal/coder
             phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
-            git diff-tree --no-commit-id --name-only -r HEAD | xargs phpcs --standard=Drupal --extensions=php,inc,module -
+            git diff-tree --no-commit-id --name-only -r HEAD | xargs phpcs --standard=Drupal --extensions=php,inc,module
 
 #      - run:
 #          name: "Run PHP Tests"
