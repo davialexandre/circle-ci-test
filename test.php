@@ -1,10 +1,12 @@
 <?php
 
 /**
- * a dsadsadsa
+ * A dsadsadsa.
  *
- * @param int $adsadsa dsadsadsa
- * @param int $dsadsadsadsa dsadsadsadsa
+ * @param int $adsadsa
+ *  Asadsadsa.
+ * @param int $dsadsadsadsa
+ *  Asadsadsadsa.
  */
 function my_function($adsadsa, $dsadsadsadsa) {
   $a = 1;
