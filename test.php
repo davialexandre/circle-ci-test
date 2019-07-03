@@ -1,8 +1,8 @@
 <?php
-/**
- * Aahahahahahhahaha.
- */
 
+/**
+ * @file
+ */
 
 /**
  * A dsadsadsa.
