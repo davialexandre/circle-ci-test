@@ -1,6 +1,18 @@
 <?php
 
-class MyClass
-{
-    function asdsa_dsadsa   ($a){}
+/**
+ * A dsadsadasdsa.
+ */
+class MyClass {
+
+  /**
+   * A dsaewqewqewq.
+   *
+   * @param int $a
+   *   A dsadsadsa.
+   */
+  public function asdsaDsadsa($a) {
+
+  }
+
 }
