@@ -36,5 +36,4 @@ jobs:
             git reset --hard -q origin/$BASE
             git checkout -q $CIRCLE_BRANCH
             #            git --no-pager diff-tree --no-commit-id --name-only -r $BASE..HEAD | xargs phpcs --standard=Drupal --extensions=php,inc,module
-            composer install
             vendor/bin/phpinsights -n --min-quality=100 --min-complexity=100
